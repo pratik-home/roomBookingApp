@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap:5px;
+  /* list-style: none; */
+  width: 400px;
+}
+
+.calendar-day {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+
+
+
+.calendar-day.user-booked {
+  background-color: green;
+  color: white;
+}
+
+.calendar-day.booked {
+  background-color: rgb(219, 47, 47);
+  color: white;
+}
+
+.calendar-day.selected {
+  background-color: rgb(157, 216, 235);
+  color: black;
+}
+
+
+
+.timeslot-selector {
+  display: grid;
+  grid-template-columns: repeat(9,1fr);
+  gap:5px;
+  list-style: none;
+  width: 600px;
+  margin: 20px 0;
+}
+
+.timeslot {
+  width: 105px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  user-select: none;
+}
+
+.timeslot.selected {
+  background-color: rgb(157, 216, 235);
+  color: black;
+}
+
+.timeslot.booked {
+  background-color: rgb(219, 47, 47);
+  color: white;
+  cursor: not-allowed;
+}
+.timeslot.my-booking {
+  background-color: green;
+  color: white;
+  cursor: not-allowed;
+}
