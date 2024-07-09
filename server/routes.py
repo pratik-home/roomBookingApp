@@ -49,17 +49,17 @@ def search():
                     'capacity': room.capacity,
                     'tags': room.tags.split(','),
                 })
-    if capacity:
-        if len(available_rooms)>0:
-            available_rooms=[{'roomID': available_room["roomID"], 'roomName': available_room["roomName"], 'capacity': available_room["capacity"], 'tags': available_room["tags"]} for available_room in available_rooms if int(capacity)<=int(available_room["capacity"])]
-    if query:
-        if len(available_rooms)>0:
-            available_rooms=[{'roomID': available_room["roomID"], 'roomName': available_room["roomName"], 'capacity': available_room["capacity"], 'tags': available_room["tags"]} for available_room in available_rooms if query in available_room["roomName"]]
     if tags:
         if len(available_rooms)>0:
             print("tags"," ".join(available_rooms[0]["tags"]))
             available_rooms=[{'roomID': available_room["roomID"], 'roomName': available_room["roomName"], 'capacity': available_room["capacity"], 'tags': available_room["tags"]} for available_room in available_rooms if tags in " ".join(available_room["tags"])]
-
+    if query:
+        if len(available_rooms)>0:
+            available_rooms=[{'roomID': available_room["roomID"], 'roomName': available_room["roomName"], 'capacity': available_room["capacity"], 'tags': available_room["tags"]} for available_room in available_rooms if query in available_room["roomName"]]
+    if capacity:
+        if len(available_rooms)>0:
+            available_rooms=[{'roomID': available_room["roomID"], 'roomName': available_room["roomName"], 'capacity': available_room["capacity"], 'tags': available_room["tags"]} for available_room in available_rooms if int(capacity)<=int(available_room["capacity"])]
+    
     return jsonify({'rooms': available_rooms})
 
 @main.route('/book', methods=['POST'])
