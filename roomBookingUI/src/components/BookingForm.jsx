@@ -40,7 +40,7 @@ const BookingForm = ({ roomId, selectedDate, bookings, accessToken , setDetails}
           }]
         }));
       setMessage('Room booked successfully');
-      setReset(true); // Reset the selected time slots
+      setReset(true); 
     } else {
       setMessage(response.data.message);
     }

@@ -8,7 +8,6 @@ socket.on('connect', () => {
 
 socket.on('room_status_update', (data) => {
   console.log('Room status updated', data);
-  // Handle room status update
 });
 
 export default socket;

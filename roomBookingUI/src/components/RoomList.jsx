@@ -22,7 +22,6 @@ const RoomSelector = styled.div`
   border: 2px solid black;
   color: black;
   width: 400px;
-  // height: 100%;
   cursor:pointer;
   display: flex;
   flex-direction: column;

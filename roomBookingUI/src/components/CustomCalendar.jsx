@@ -21,11 +21,11 @@ const CustomCalendar = ({ bookings, onSelectDate, selectedDate, accessToken}) =>
       let end = parseInt(booking.endTime.replace(':', ''), 10);
       while (start < end) {
         bookedSlots.add(start);
-        start += (start % 100 === 30) ? 70 : 30; // Increment time slot by 30 minutes
+        start += (start % 100 === 30) ? 70 : 30; 
       }
     });
 
-    return bookedSlots.size === 18; // 18 slots in a day for 30-minute intervals starting from 10 AM
+    return bookedSlots.size === 18; 
   };
 
   const isSelectedDate = (date) => {

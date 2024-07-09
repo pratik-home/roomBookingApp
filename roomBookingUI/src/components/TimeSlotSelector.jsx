@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 const TimeSlotSelector = ({ onSelectTimeSlots, bookings, accessToken, reset }) => {
-  const startHour = 10; // Starting at 10 AM
-  const numberOfSlots = 18; // 18 slots of 30 minutes each
+  const startHour = 10;
+  const numberOfSlots = 18;
 
   const timeSlots = Array.from({ length: numberOfSlots }, (_, i) => {
     const startHours = String(startHour + Math.floor(i / 2)).padStart(2, '0');
@@ -25,7 +25,6 @@ const TimeSlotSelector = ({ onSelectTimeSlots, bookings, accessToken, reset }) =
       if (prevSelectedSlots.includes(slot)) {
         return prevSelectedSlots.filter(s => s !== slot);
       } else {
-        // Check if the new slot is consecutive
         if (prevSelectedSlots.length === 0) {
           return [slot];
         }
@@ -36,7 +35,7 @@ const TimeSlotSelector = ({ onSelectTimeSlots, bookings, accessToken, reset }) =
         if (index === lastIndex + 1 || index === firstIndex - 1) {
           return [...prevSelectedSlots, slot].sort((a, b) => timeSlots.indexOf(a) - timeSlots.indexOf(b));
         } else {
-          return [slot]; // Reset selection if non-consecutive
+          return [slot]; 
         }
       }
     });
