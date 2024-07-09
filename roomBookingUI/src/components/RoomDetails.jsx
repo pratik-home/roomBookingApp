@@ -26,7 +26,11 @@ const RoomDetails = ({ roomId }) => {
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const response = await axios.get(`http://localhost:5000/room/${roomId}`);
+      const response = await axios.get(`http://localhost:5000/room/${roomId}`, {
+        headers: {
+          Authorization: accessToken
+        }
+      });
       setDetails(response.data);
     };
 
@@ -39,8 +43,7 @@ const RoomDetails = ({ roomId }) => {
           bookings: [...prevDetails.bookings, {
             date: data.date,
             startTime: data.startTime,
-            endTime: data.endTime,
-            accessToken: data.accessToken
+            endTime: data.endTime
           }]
         }));
       }
@@ -70,7 +73,7 @@ const RoomDetails = ({ roomId }) => {
       <p>Tags: {details.tags.join(', ')}</p>
       <h3>Bookings</h3>
       <CustomCalendar bookings={details.bookings} onSelectDate={handleSelectDate} selectedDate={selectedDate} accessToken={accessToken}/>
-      {selectedDate && <BookingForm roomId={roomId} selectedDate={selectedDate} bookings={getBookingsForDate(selectedDate)} accessToken={accessToken}/>}
+      {selectedDate && <BookingForm roomId={roomId} selectedDate={selectedDate} bookings={getBookingsForDate(selectedDate)} accessToken={accessToken} setDetails={setDetails}/>}
     </RoomsDetailsWrapper>
   );
 };

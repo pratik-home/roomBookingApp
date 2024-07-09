@@ -32,11 +32,16 @@ const RoomsAndBookingWrapper = styled.div`
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('accessToken') || null);
   const [rooms, setRooms] = useState([]);
+  const [userRooms, setUserRooms] = useState([]);
+  const [showUserRooms, setShowUserRooms] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
 
-  const handleSearch = async (query, capacity) => {
+  const handleSearch = async (query, capacity, time, tags) => {
     const response = await axios.get('http://localhost:5000/search', {
-      params: { query, capacity }
+      params: { query, capacity, time, tags },
+      headers: {
+        Authorization: localStorage.getItem('accessToken')
+      }
     });
     setRooms(response.data.rooms);
   };
@@ -50,11 +55,13 @@ const App = () => {
     const { accessToken } = response.data;
     setToken(accessToken);
     localStorage.setItem('accessToken', accessToken);
+    handleSearch()
   };
 
   useEffect(() => {
     if(!token)
       generateToken()
+    else
       handleSearch()
   }, []);
 
@@ -64,9 +71,9 @@ const App = () => {
         ""
       ) : (
         <>
-          <SearchBar onSearch={handleSearch} />
+          <SearchBar onSearch={handleSearch} setUserRooms={setUserRooms} setShowUserRooms={setShowUserRooms} showUserRooms={showUserRooms} onRoomChange={handleRoomSelect}/>
           <RoomsAndBookingWrapper>
-            <RoomList rooms={rooms} onSelect={handleRoomSelect} />
+            <RoomList rooms={showUserRooms?userRooms:rooms} onSelect={handleRoomSelect} />
             {selectedRoom && <RoomDetails roomId={selectedRoom} />}
           </RoomsAndBookingWrapper>
         </>

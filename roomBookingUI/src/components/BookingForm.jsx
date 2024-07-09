@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TimeSlotSelector from './TimeSlotSelector';
 
-const BookingForm = ({ roomId, selectedDate, bookings, accessToken }) => {
+const BookingForm = ({ roomId, selectedDate, bookings, accessToken , setDetails}) => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [message, setMessage] = useState('');
@@ -18,16 +18,27 @@ const BookingForm = ({ roomId, selectedDate, bookings, accessToken }) => {
     const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
     const day = String(selectedDate.getDate()).padStart(2, '0');
     const date = `${year}-${month}-${day}`;
-    console.log(date)
     const response = await axios.post('http://localhost:5000/book', {
       roomID: roomId,
-      accessToken,
       startTime,
       endTime,
-      date,
+      date
+    },{
+      headers: {
+        Authorization: accessToken
+      }
     });
 
     if (response.data.success) {
+        setDetails(prevDetails => ({
+          ...prevDetails,
+          bookings: [...prevDetails.bookings, {
+            date: date,
+            startTime: startTime,
+            endTime: endTime,
+            accessToken: accessToken
+          }]
+        }));
       setMessage('Room booked successfully');
       setReset(true); // Reset the selected time slots
     } else {
